@@ -53,8 +53,6 @@ class ScannerVerifyStateNotifier extends StateNotifier<ServiceResultGenericState
           for (final element in line.elements) {
             final cleanText = element.text.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '').toLowerCase();
 
-            print("Reconocido: ${element.text} → Limpio: $cleanText");
-
             if (ingredientNames.contains(cleanText)) {
               state = ServiceResultGenericState.error("Este producto tiene $cleanText");
               return;

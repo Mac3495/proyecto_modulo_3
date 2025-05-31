@@ -1,0 +1,84 @@
+name: Firebase App Distribution CI/CD
+
+on:
+  push:
+    branches:
+      - develop
+      - '**release**'
+
+jobs:
+  lints:
+    runs-on: ubuntu-latest
+    container: ghcr.io/cirruslabs/flutter:3.24.5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze code
+        run: flutter analyze
+
+  tests:
+    runs-on: ubuntu-latest
+    container: ghcr.io/cirruslabs/flutter:3.24.5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test
+
+  firebase_distribution_dev:
+    name: Distribute Development
+    needs: [lints, tests]
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    container: ghcr.io/cirruslabs/flutter:3.24.5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK (development)
+        run: flutter build apk --flavor development
+
+      - name: Upload to Firebase App Distribution (dev)
+        run: |
+          curl -sL https://firebase.tools | bash
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-development-release.apk \
+            --app ${{ secrets.FIREBASE_APP_ID_DEV }} \
+            --groups "testers" \
+            --token ${{ secrets.FIREBASE_TOKEN }}
+
+  firebase_distribution_prod:
+    name: Distribute Production
+    needs: [lints, tests]
+    if: contains(github.ref, 'release')
+    runs-on: ubuntu-latest
+    container: ghcr.io/cirruslabs/flutter:3.24.5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK (production)
+        run: flutter build apk --flavor production
+
+      - name: Upload to Firebase App Distribution (prod)
+        run: |
+          curl -sL https://firebase.tools | bash
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-production-release.apk \
+            --app ${{ secrets.FIREBASE_APP_ID_PROD }} \
+            --groups "testers" \
+            --token ${{ secrets.FIREBASE_TOKEN }}

@@ -9,7 +9,6 @@ class ScannerModuleController extends BaseModuleController {
   ScannerModuleController(super.ref);
 
   void takePhoto() {
-    print('Tomar foto');
     ref.read(scannerStateNotifierProvider.notifier).captureImage();
   }
 

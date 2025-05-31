@@ -19,7 +19,6 @@ class SplashStateNotifier extends StateNotifier<SessionState> {
       );
 
       if (result.isNotEmpty) {
-        print('Datos recuperados de la DB: ${result.first}');
         final user = UserModel.fromJson(result.first);
         ref.read(userProvider.notifier).state = user;
         state = const SessionState(state: SessionStates.goToHome);
