@@ -1,6 +1,6 @@
 # 📱 Proyecto final módulo 3 - **ScanApp**
 
-**Autor:** Marcelo  
+**Autor:** Marcelo Torrez Azuga 
 **Repositorio:** [proyecto_modulo_3](https://github.com/Mac3495/proyecto_modulo_3)
 
 ---
