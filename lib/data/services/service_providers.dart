@@ -1,5 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:proyecto/core/providers/app_providers.dart';
+import 'package:proyecto/data/services/feature_flags/feature_flag_service.dart';
+import 'package:proyecto/data/services/feature_flags/feature_flag_service_imp.dart';
 import 'package:proyecto/data/services/ingredient/ingredient_service.dart';
 import 'package:proyecto/data/services/ingredient/ingredient_service_imp.dart';
 import 'package:proyecto/data/services/login/login_service.dart';
@@ -32,3 +34,7 @@ final ingredientServiceProvider = Provider<IngredientService>((ref) {
       );
   return IngredientServiceImpl(db);
 });
+
+final featureFlagServiceProvider = Provider<FeatureFlagService>(
+  (ref) => FeatureFlagServiceImp(),
+);

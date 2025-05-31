@@ -12,6 +12,7 @@ final appRouterProvider = Provider.autoDispose<GoRouter>(
       HomeRouter.configuration,
       LoginRouter.configuration,
       ProductRouter.configuration,
+      MaintenanceRouter.configuration,
     ],
     onException: (_, __, ___) {},
   ),

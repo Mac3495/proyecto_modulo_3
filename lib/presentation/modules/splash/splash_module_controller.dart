@@ -22,4 +22,6 @@ class SplashModuleController extends BaseModuleController {
   void goToSignup() => navigator.pushReplacement(SignupRoutes.signup, args: AppConstants.adminRol);
 
   void goToHome(String rol) => navigator.pushReplacement(HomeRoutes.home);
+
+  void goToMaintenance() => navigator.pushReplacement(MaintenanceRoutes.maintenance);
 }

@@ -14,7 +14,7 @@ class ScannerStateNotifier extends StateNotifier<ServiceResultGenericState<File>
   Future<void> captureImage() async {
     state = const ServiceResultGenericState.loading();
     try {
-      final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
       if (pickedFile == null) {
         state = const ServiceResultGenericState.error("No se seleccionó ninguna imagen");

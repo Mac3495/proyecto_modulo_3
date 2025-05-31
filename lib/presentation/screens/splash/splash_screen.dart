@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:proyecto/core/providers/app_providers.dart';
 import 'package:proyecto/core/utils/app_constants.dart';
 import 'package:proyecto/data/models/user/state/session_state.dart';
+import 'package:proyecto/data/services/service_providers.dart';
 import 'package:proyecto/presentation/modules/home/home_module_providers.dart';
 import 'package:proyecto/presentation/modules/splash/splash_module_providers.dart';
 
@@ -20,8 +21,15 @@ class SplashScreen extends HookConsumerWidget {
         final controller = ref.watch(splashModuleController);
 
         useEffect(() {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            controller.checkSession(db);
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            final featureFlagService = ref.read(featureFlagServiceProvider);
+            final isMaintenance = await featureFlagService.isInMaintenance();
+
+            if (isMaintenance) {
+              controller.goToMaintenance();
+            } else {
+              controller.checkSession(db);
+            }
           });
 
           return null;

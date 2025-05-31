@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -73,6 +74,17 @@ class SignupScreen extends HookConsumerWidget {
               ElevatedButton(
                 onPressed: () => controller.saveUser(rol ?? 'client'),
                 child: const Text("Registrar y continuar"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final db = FirebaseFirestore.instance;
+                  await db.collection("featureFlags").get().then((event) {
+                    for (var doc in event.docs) {
+                      print("${doc.id} => ${doc.data()}");
+                    }
+                  });
+                },
+                child: const Text("Ver feature"),
               ),
             ],
           ),

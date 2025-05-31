@@ -6,17 +6,20 @@ import 'package:proyecto/core/providers/app_providers.dart';
 import 'package:proyecto/core/providers/app_router_provider.dart';
 import 'package:proyecto/core/utils/app_constants.dart';
 import 'package:proyecto/core/utils/app_theme.dart';
+import 'package:proyecto/core/config/firebase/firebase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppDatabase.database;
+  await initializeFirebaseApp();
   final sharedPreferences = await SharedPreferences.getInstance();
 
   runApp(
-    ProviderScope(overrides: [
-      appPreferencesProvider.overrideWith((ref) => AppPreferences(sharedPreferences))
-    ], child: const MyApp()),
+    ProviderScope(
+      overrides: [appPreferencesProvider.overrideWith((ref) => AppPreferences(sharedPreferences))],
+      child: const MyApp(),
+    ),
   );
 }
 
