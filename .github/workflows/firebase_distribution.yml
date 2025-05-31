@@ -62,7 +62,7 @@ jobs:
           curl -sL https://firebase.tools | bash
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-development-release.apk \
             --app ${{ secrets.FIREBASE_APP_ID_DEV }} \
-            --groups "testers" \
+            --groups "QA" \
             --token ${{ secrets.FIREBASE_TOKEN }}
 
   # JOB 4: Distribuye a Firebase App Distribution (producción)
@@ -87,5 +87,5 @@ jobs:
           curl -sL https://firebase.tools | bash
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-production-release.apk \
             --app ${{ secrets.FIREBASE_APP_ID_PROD }} \
-            --groups "QA" \
+            --groups "testers" \
             --token ${{ secrets.FIREBASE_TOKEN }}
