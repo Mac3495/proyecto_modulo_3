@@ -13,7 +13,7 @@ jobs:
   # JOB 1: Analiza el código para detectar errores de estilo o sintaxis
   lints:
     runs-on: ubuntu-latest
-    container: ghcr.io/cirruslabs/flutter:3.24.5
+    container: ghcr.io/cirruslabs/flutter:3.24.5 #Contenedor de Docker para flutter
 
     steps:
       - name: Checkout code
